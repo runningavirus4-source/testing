@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rainbow Cursor Trail</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #111;
+    overflow: hidden;
+  }
+  .trail {
+    position: fixed;
+    pointer-events: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    animation: fadeOut 1s forwards;
+  }
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      transform: scale(2);
+    }
+  }
+</style>
+</head>
+<body>
+<script>
+  const colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'];
+  let colorIndex = 0;
+
+  document.addEventListener('mousemove', e => {
+    const trail = document.createElement('div');
+    trail.classList.add('trail');
+    trail.style.left = e.clientX + 'px';
+    trail.style.top = e.clientY + 'px';
+    trail.style.backgroundColor = colors[colorIndex];
+    document.body.appendChild(trail);
+
+    colorIndex = (colorIndex + 1) % colors.length;
+
+    setTimeout(() => {
+      trail.remove();
+    }, 1000);
+  });
+</script>
+</body>
+</html>
